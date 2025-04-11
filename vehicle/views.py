@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from .models import Vehicle
 
 
-def create_vehicle(request):
+def vehicle_create(request):
     if request.method == "POST":
         Vehicle.objects.create(
             model=request.POST.get("model"),
@@ -12,7 +12,7 @@ def create_vehicle(request):
             status=request.POST.get("status", "available"),
         )
         return redirect("vehicle_list")
-    return render(request, "vehicle/create_vehicle.html")
+    return render(request, "vehicle/vehicle_create.html")
 
 
 def vehicle_list(request):

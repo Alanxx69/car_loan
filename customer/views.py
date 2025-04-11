@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from .models import Customer
 
 
-def create_customer(request):
+def customer_create(request):
     if request.method == "POST":
         Customer.objects.create(
             first_name=request.POST.get("first_name"),
@@ -17,7 +17,7 @@ def create_customer(request):
             zip_code=request.POST.get("zip_code"),
         )
         return redirect("customer_list")
-    return render(request, "customer/create_customer.html")
+    return render(request, "customer/customer_create.html")
 
 
 def customer_list(request):

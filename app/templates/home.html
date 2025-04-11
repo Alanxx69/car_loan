@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+<div class="branding-container" style="text-align: center; padding: 2rem;">
+    <!-- Cabeçalho com logo, nome e slogan da marca -->
+    <header class="brand-header" style="margin-bottom: 2rem;">
+        <img src="{% static 'app/img/logo.png' %}" alt="Logo da Marca" class="brand-logo" style="width: 150px;">
+        <h1 class="brand-title" style="font-family: 'Helvetica Neue', sans-serif; margin: 0.5rem 0;">
+            CarLoan
+        </h1>
+        <p class="brand-tagline" style="font-size: 1.2rem; color: #555;">
+            Conectando você ao veículo certo.
+        </p>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <section class="home-content">
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            Bem-vindo à nossa plataforma de empréstimo de carros! Aqui, combinamos inovação com confiança para oferecer as melhores soluções financeiras para você.
+        </p>
+        <p style="font-size: 1.1rem; line-height: 1.6;">
+            Explore nosso site para descobrir como podemos ajudar a transformar sua jornada sobre rodas.
+        </p>
+    </section>
+</div>
+{% endblock %}
