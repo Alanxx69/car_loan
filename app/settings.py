@@ -38,8 +38,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "vehicle",
     "customer",
+    "reservation",
 ]
 
 MIDDLEWARE = [
@@ -125,9 +125,9 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),  # Adicione esta linha para a pasta estática principal
     os.path.join(BASE_DIR, "app/static"),
     os.path.join(BASE_DIR, "customer/static"),
-    os.path.join(BASE_DIR, "vehicle/static"),
 ]
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")  # Adicione esta linha
 

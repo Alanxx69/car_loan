@@ -25,7 +25,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.home, name="home"),  # URL raiz configurada para a view home
     path("customer/", include("customer.urls")),
-    path("vehicle/", include("vehicle.urls")),
     path("login/", auth_views.LoginView.as_view(template_name="login.html"), name="login"),
     path("register/", views.register, name="register"),
     path("logout/", auth_views.LogoutView.as_view(next_page="home"), name="logout"),
