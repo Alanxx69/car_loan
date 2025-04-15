@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}CarLoan{% endblock %}</title>
+</head>
+<body>
+  <header>
+    <h1>CarLoan</h1>
+    <nav>
+      <a href="{% url 'home' %}">Início</a>
+      <!-- Exemplo em base.html -->
+      {% if user.is_authenticated %}
+        <p>Olá, {{ user.username }}!</p>
+        <a href="{% url 'profile_update' %}">Editar Meu Perfil</a> <!-- Link para a nova view -->
+        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">Sair</button>
+        </form>
+      {% else %}
+        <a href="{% url 'login' %}" class="btn btn-primary">Entrar</a>
+        <a href="{% url 'register' %}">Registrar</a>
+      {% endif %}
+        <a href="{% url 'about' %}">Sobre Nós</a>
+        <a href="{% url 'contact' %}">Contato</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <main>
+    {% block content %}
+    <!-- Conteúdo de cada página entra aqui -->
+    {% endblock %}
+  </main>
+
+  <footer>
+    <p>© 2025 CarLoan</p>
+  </footer>
+</body>
+</html>

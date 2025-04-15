@@ -1,0 +1,9 @@
+<h1>Atualizar Cliente: {{ customer.first_name }} {{ customer.last_name }}</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }} {# Renderiza o formulário com os campos preenchidos #}
+    <button type="submit">Salvar Alterações</button>
+</form>
+
+<a href="{% url 'home' %}">Cancelar</a>
