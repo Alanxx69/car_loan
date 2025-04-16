@@ -5,11 +5,18 @@ from django.shortcuts import redirect, render
 
 from customer.forms import CustomUserCreationForm  # Importa o formulário customizado
 from customer.models import Customer  # Importe o modelo Customer
+from reservation.models import Location, Vehicle
 
 
 def home(request):
     """View para a página inicial do sistema de empréstimo de veículos."""
-    return render(request, "home/home.html")
+    available_vehicles = Vehicle.objects.filter(status="available")  # Filtra por status
+    locations = Location.objects.all()  # Obtém todas as localizações disponíveis
+    context = {
+        "available_vehicles": available_vehicles,
+        "locations": locations,
+    }
+    return render(request, "home/home.html", context)
 
 
 def register(request):
