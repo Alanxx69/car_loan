@@ -10,9 +10,9 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav mx-auto py-0">
                     <a href="{% url 'home' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Início</a>
-                    <a href="#secao-sobre" class="nav-item nav-link">Sobre</a>
-                    <a href="#secao-servicos" class="nav-item nav-link">Serviços</a>
-                    <a href="#secao-contato" class="nav-item nav-link">Contato</a>
+                    <a href="{% url 'home' %}#secao-sobre" class="nav-item nav-link">Sobre</a>
+                    <a href="{% url 'home' %}#secao-servicos" class="nav-item nav-link">Serviços</a>
+                    <a href="{% url 'home' %}#secao-contato" class="nav-item nav-link">Contato</a>
                 </div>
                 {% if user.is_authenticated %}
                     <div class="nav-item dropdown">

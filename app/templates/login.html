@@ -1,9 +1,14 @@
 {% extends 'base.html' %}
 
-{% block title %}Login | CarLoan{% endblock title %}
+{% block extra_head %}
+{% load static %}
+<link href="{% static 'css/login.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}Login{% endblock title %}
 
 {% block content %}
-<div class="container py-5">
+<div class="container py-5 login-container">
   <div class="row justify-content-center">
     <div class="col-lg-5 col-md-7">
       <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">

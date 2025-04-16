@@ -1,0 +1,14 @@
+/* Estilos para a página de login */
+.login-container .bg-light {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    border-radius: 1rem;
+}
+
+.login-container .form-floating input {
+    border-radius: 0.5rem;
+    border: 1px solid #dee2e6;
+}
+
+.login-container .btn-primary {
+    font-weight: 700;
+}
