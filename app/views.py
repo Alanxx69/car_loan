@@ -8,14 +8,25 @@ from customer.models import Customer  # Importe o modelo Customer
 from reservation.models import Location, Vehicle
 
 
-def home(request):
-    """View para a página inicial do sistema de empréstimo de veículos."""
-    available_vehicles = Vehicle.objects.filter(status="available")  # Filtra por status
-    locations = Location.objects.all()  # Obtém todas as localizações disponíveis
+def home_view(request):
+    """
+    View para a página inicial
+    """
+    # Busca as localizações existentes
+    locations = Location.objects.all()
+
+    # Gera o range de horas (0-23) para os selects de horário
+    hours_range = range(24)
+
+    # Veículos disponíveis para exibição
+    available_vehicles = Vehicle.objects.filter(status="available")
+
     context = {
-        "available_vehicles": available_vehicles,
         "locations": locations,
+        "hours_range": hours_range,
+        "available_vehicles": available_vehicles,
     }
+
     return render(request, "home/home.html", context)
 
 

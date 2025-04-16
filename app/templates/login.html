@@ -1,22 +1,33 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-</head>
-<body>
-  <h1>Entrar</h1>
-  <form method="post">
-    {% csrf_token %}
-    <label for="username">Usuário:</label><br>
-    <input type="text" id="username" name="username" required><br><br>
+{% extends 'base.html' %}
 
-    <label for="password">Senha:</label><br>
-    <input type="password" id="password" name="password" required><br><br>
+{% block title %}Login | CarLoan{% endblock title %}
 
-    <button type="submit">Entrar</button>
-  </form>
-  <p>Não tem uma conta? <a href="{% url 'register' %}">Cadastre-se aqui</a>.</p>
-</body>
-</html>
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-5 col-md-7">
+      <div class="bg-light rounded p-4 p-sm-5 wow fadeInUp" data-wow-delay="0.1s">
+        <h3 class="text-center mb-4">Entrar na sua conta</h3>
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="username" name="username" placeholder="Usuário" required>
+            <label for="username">Usuário</label>
+          </div>
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Senha" required>
+            <label for="password">Senha</label>
+          </div>
+          <div class="d-grid">
+            <button class="btn btn-primary rounded-pill py-2" type="submit">Entrar</button>
+          </div>
+          <p class="text-center mt-3 mb-0">
+            Ainda não tem conta?
+            <a href="{% url 'register' %}">Cadastre-se aqui</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}
