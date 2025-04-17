@@ -1,0 +1,86 @@
+/* Estilos para a página de atualização de perfil do cliente */
+
+.customer-update-page {
+    padding: 3rem 0; /* Espaçamento vertical */
+}
+
+.customer-update-card {
+    background: #F2F2F2; /* Cor de fundo clara (var(--bs-light)) */
+    padding: 2.5rem; /* Espaçamento interno */
+    border-radius: 1rem; /* Cantos arredondados */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Sombra suave */
+    max-width: 700px; /* Largura máxima */
+    margin: 0 auto; /* Centralizar */
+}
+
+.customer-update-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1F2E4E; /* Cor secundária (var(--bs-secondary)) */
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.customer-update-form p {
+    margin-bottom: 1.25rem; /* Espaço entre os campos do formulário (gerados por as_p) */
+}
+
+.customer-update-form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #1F2E4E; /* Cor secundária */
+}
+
+/* Estilo padrão para inputs, selects, textareas já vem do form.py (form-control) */
+.customer-update-form .form-control {
+    border-radius: 0.5rem; /* Cantos arredondados para inputs */
+    border: 1px solid #dee2e6;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.customer-update-form .form-control:focus {
+    border-color: #EA001E; /* Cor primária (var(--bs-primary)) */
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(234, 0, 30, 0.25); /* Sombra de foco na cor primária */
+}
+
+/* Estilo específico para o input de data para garantir que o estilo padrão não interfira */
+.customer-update-form input[type="date"].form-control {
+    /* Pode precisar de ajustes específicos dependendo do navegador */
+    line-height: 1.5; /* Ajuste para alinhar melhor */
+}
+
+.customer-update-actions {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: space-between; /* Alinha botão e link */
+    align-items: center;
+}
+
+.btn-save-profile {
+    padding: 0.75rem 1.5rem;
+    background-color: #EA001E; /* Cor primária */
+    color: #fff;
+    border: none;
+    border-radius: 2rem; /* Estilo pill */
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.btn-save-profile:hover {
+    background-color: #1F2E4E; /* Cor secundária no hover */
+}
+
+.cancel-link {
+    color: #1F2E4E; /* Cor secundária */
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.cancel-link:hover {
+    color: #EA001E; /* Cor primária no hover */
+    text-decoration: underline;
+}

@@ -1,0 +1,35 @@
+<div class="container-fluid nav-bar sticky-top px-0 px-lg-4 py-2 py-lg-0">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a href="{% url 'home' %}" class="navbar-brand p-0">
+                <h1 class="display-6 text-primary"><i class="fas fa-car-alt me-3"></i>CarLoan</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav mx-auto py-0">
+                    <a href="{% url 'home' %}" class="nav-item nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Início</a>
+                    <a href="{% url 'home' %}#secao-sobre" class="nav-item nav-link">Sobre</a>
+                    <a href="{% url 'home' %}#secao-servicos" class="nav-item nav-link">Serviços</a>
+                    <a href="{% url 'home' %}#secao-contato" class="nav-item nav-link">Contato</a>
+                </div>
+                {% if user.is_authenticated %}
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Olá, {{ user.username }}</a>
+                        <div class="dropdown-menu m-0">
+                            <a href="{% url 'profile_update' %}" class="dropdown-item">Meu Perfil</a>
+                            <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                                {% csrf_token %}
+                                <button type="submit" class="dropdown-item">Sair</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <a href="{% url 'login' %}" class="btn btn-primary rounded-pill py-2 px-4 me-2">Entrar</a>
+                    <a href="{% url 'register' %}" class="btn btn-outline-primary rounded-pill py-2 px-4">Registrar</a>
+                {% endif %}
+            </div>
+        </nav>
+    </div>
+</div>

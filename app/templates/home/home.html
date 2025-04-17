@@ -1,0 +1,504 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}CarLoan{% endblock title %}
+
+{% block content %}
+
+<!-- Carousel Start -->
+<div id="secao-inicio" class="header-carousel">
+    <div id="carouselId" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+        <ol class="carousel-indicators">
+            <li data-bs-target="#carouselId" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Primeiro slide"></li>
+            <!-- <li data-bs-target="#carouselId" data-bs-slide-to="1" aria-label="Segundo slide"></li> -->
+        </ol>
+        <div class="carousel-inner" role="listbox">
+            <div class="carousel-item active">
+                <img src="{% static 'img/carousel-2.jpg' %}" class="img-fluid w-100" alt="Slide Principal"/>
+                <div class="carousel-caption">
+                    <div class="container py-4">
+                        <div class="row g-5">
+                            <div class="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s" style="animation-delay: 1s;">
+                                <div class="bg-secondary rounded p-5">
+                                    <h4 class="text-white mb-4">Reserve um veículo</h4>
+                                    <form>
+                                        <div class="row g-3">
+                                            <div class="col-12">
+                                                <select class="form-select" aria-label="Selecione o tipo de carro">
+                                                    <option selected>Selecione o tipo de carro</option>
+                                                    {% for vehicle in available_vehicles %}
+                                                        <option value="{{ vehicle.id }}">{{ vehicle.model }}</option>
+                                                    {% empty %}
+                                                        <option value="">Nenhum veículo disponível</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                                        <span class="fas fa-map-marker-alt"></span>
+                                                        <span class="ms-1">Retirada</span>
+                                                    </div>
+                                                    <select class="form-select" aria-label="Selecione um local">
+                                                        <option selected>Selecione um local</option>
+                                                        {% for location in locations %}
+                                                            <option value="{{ location.id }}">{{ location }}</option>
+                                                        {% empty %}
+                                                            <option value="">Nenhuma localização disponível</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <a href="#" class="text-start text-white d-block mb-2">Precisa de um local de devolução diferente?</a>
+                                                <div class="input-group">
+                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                                        <span class="fas fa-map-marker-alt"></span><span class="ms-1">Devolução</span>
+                                                    </div>
+                                                    <select class="form-select" aria-label="Selecione um local">
+                                                        <option selected>Selecione um local</option>
+                                                        {% for location in locations %}
+                                                            <option value="{{ location.id }}">{{ location }}</option>
+                                                        {% empty %}
+                                                            <option value="">Nenhuma localização disponível</option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                                        <span class="fas fa-calendar-alt"></span><span class="ms-1">Data de Retirada</span>
+                                                    </div>
+                                                    <input class="form-control" type="date">
+                                                    <select class="form-select ms-3" aria-label="Selecione o horário de retirada">
+                                                        <option selected>00:00</option>
+                                                        <option value="1">01:00</option>
+                                                        <option value="2">02:00</option>
+                                                        <option value="3">03:00</option>
+                                                        <option value="4">04:00</option>
+                                                        <option value="5">05:00</option>
+                                                        <option value="6">06:00</option>
+                                                        <option value="7">07:00</option>
+                                                        <option value="8">08:00</option>
+                                                        <option value="9">09:00</option>
+                                                        <option value="10">10:00</option>
+                                                        <option value="11">11:00</option>
+                                                        <option value="12">12:00</option>
+                                                        <option value="13">13:00</option>
+                                                        <option value="14">14:00</option>
+                                                        <option value="15">15:00</option>
+                                                        <option value="16">16:00</option>
+                                                        <option value="17">17:00</option>
+                                                        <option value="18">18:00</option>
+                                                        <option value="19">19:00</option>
+                                                        <option value="20">20:00</option>
+                                                        <option value="21">21:00</option>
+                                                        <option value="22">22:00</option>
+                                                        <option value="23">23:00</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <div class="input-group">
+                                                    <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
+                                                        <span class="fas fa-calendar-alt"></span><span class="ms-1">Data de Devolução</span>
+                                                    </div>
+                                                    <input class="form-control" type="date">
+                                                    <select class="form-select ms-3" aria-label="Selecione o horário de devolução">
+                                                        <option selected>00:00</option>
+                                                        <option value="1">01:00</option>
+                                                        <option value="2">02:00</option>
+                                                        <option value="3">03:00</option>
+                                                        <option value="4">04:00</option>
+                                                        <option value="5">05:00</option>
+                                                        <option value="6">06:00</option>
+                                                        <option value="7">07:00</option>
+                                                        <option value="8">08:00</option>
+                                                        <option value="9">09:00</option>
+                                                        <option value="10">10:00</option>
+                                                        <option value="11">11:00</option>
+                                                        <option value="12">12:00</option>
+                                                        <option value="13">13:00</option>
+                                                        <option value="14">14:00</option>
+                                                        <option value="15">15:00</option>
+                                                        <option value="16">16:00</option>
+                                                        <option value="17">17:00</option>
+                                                        <option value="18">18:00</option>
+                                                        <option value="19">19:00</option>
+                                                        <option value="20">20:00</option>
+                                                        <option value="21">21:00</option>
+                                                        <option value="22">22:00</option>
+                                                        <option value="23">23:00</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12">
+                                                <button class="btn btn-light w-100 py-2">Reservar Agora</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 d-none d-lg-flex fadeInRight animated" data-animation="fadeInRight" data-delay="1s" style="animation-delay: 1s;">
+                                <div class="text-start">
+                                    <h1 class="display-5 text-white">Comece agora a planejar sua viagem!</h1>
+                                    <p>Curta momentos incríveis</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Removido o segundo item do carrossel -->
+            <!-- <div class="carousel-item"> ... </div> -->
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+
+<!-- Car categories Start -->
+<div class="container-fluid categories pb-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+            <h1 class="display-5 text-capitalize mb-3">Veículos <span class="text-primary">Disponíveis</span></h1>
+            <p class="mb-0">Explore nossa seleção exclusiva de carros, com opções para todos os perfis e ocasiões. Seja para negócios ou lazer, encontre o veículo ideal para transformar sua experiência de viagem.</p>
+        </div>
+        <div class="categories-carousel owl-carousel wow fadeInUp" data-wow-delay="0.1s">
+            <div class="categories-item p-4">
+                <div class="categories-item-inner">
+                    <div class="categories-img rounded-top">
+                        <img src="{% static 'img/car-1.png' %}" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="categories-content rounded-bottom p-4">
+                        <h4>Mercedes Benz R3</h4>
+                        <div class="categories-review mb-4">
+                            <div class="me-3">4.5 Avaliação</div>
+                            <div class="d-flex justify-content-center text-secondary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star text-body"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$99:00/Day</h4>
+                        </div>
+                        <div class="row gy-2 gx-0 text-center mb-4">
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Reservar Agora</a>
+                    </div>
+                </div>
+            </div>
+            <div class="categories-item p-4">
+                <div class="categories-item-inner">
+                    <div class="categories-img rounded-top">
+                        <img src="{% static 'img/car-2.png' %}" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="categories-content rounded-bottom p-4">
+                        <h4>Toyota Corolla Cross</h4>
+                        <div class="categories-review mb-4">
+                            <div class="me-3">3.5 Avaliação</div>
+                            <div class="d-flex justify-content-center text-secondary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star text-body"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$128:00/Day</h4>
+                        </div>
+                        <div class="row gy-2 gx-0 text-center mb-4">
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Reservar Agora</a>
+                    </div>
+                </div>
+            </div>
+            <div class="categories-item p-4">
+                <div class="categories-item-inner">
+                    <div class="categories-img rounded-top">
+                        <img src="{% static 'img/car-3.png' %}" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="categories-content rounded-bottom p-4">
+                        <h4>Tesla Model S Plaid</h4>
+                        <div class="categories-review mb-4">
+                            <div class="me-3">3.8 Avaliação</div>
+                            <div class="d-flex justify-content-center text-secondary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star text-body"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$170:00/Day</h4>
+                        </div>
+                        <div class="row gy-2 gx-0 text-center mb-4">
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Reservar Agora</a>
+                    </div>
+                </div>
+            </div>
+            <div class="categories-item p-4">
+                <div class="categories-item-inner">
+                    <div class="categories-img rounded-top">
+                        <img src="{% static 'img/car-4.png' %}" class="img-fluid w-100 rounded-top" alt="">
+                    </div>
+                    <div class="categories-content rounded-bottom p-4">
+                        <h4>Hyundai Kona Electric</h4>
+                        <div class="categories-review mb-4">
+                            <div class="me-3">4.8 Avaliação</div>
+                            <div class="d-flex justify-content-center text-secondary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h4 class="bg-white text-primary rounded-pill py-2 px-4 mb-0">$187:00/Day</h4>
+                        </div>
+                        <div class="row gy-2 gx-0 text-center mb-4">
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-users text-dark"></i> <span class="text-body ms-1">4 Seat</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">AT/MT</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-gas-pump text-dark"></i> <span class="text-body ms-1">Petrol</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-car text-dark"></i> <span class="text-body ms-1">2015</span>
+                            </div>
+                            <div class="col-4 border-end border-white">
+                                <i class="fa fa-cogs text-dark"></i> <span class="text-body ms-1">AUTO</span>
+                            </div>
+                            <div class="col-4">
+                                <i class="fa fa-road text-dark"></i> <span class="text-body ms-1">27K</span>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary rounded-pill d-flex justify-content-center py-3">Reservar Agora</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Car categories End -->
+
+<!-- About Start -->
+<div id="secao-sobre" class="container-fluid overflow-hidden about py-5">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-xl-6 wow fadeInLeft" data-wow-delay="0.2s">
+                <div class="about-item">
+                    <div class="pb-5">
+                        <h1 class="display-5 text-capitalize">CarLoan <span class="text-primary">Sobre</span></h1>
+                        <p class="mb-0">
+                            Na CarLoan, acreditamos que viajar de carro é sinônimo de liberdade. Nosso compromisso é oferecer um serviço ágil, seguro e personalizado para transformar cada viagem em uma experiência única.
+                        </p>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="about-item-inner border p-4">
+                                <div class="about-icon mb-4">
+                                    <img src="{% static 'img/about-icon-1.png' %}" class="img-fluid w-50 h-50" alt="Icon">
+                                </div>
+                                <h5 class="mb-3">Nossa Visão</h5>
+                                <p class="mb-0">Ser referência em mobilidade, conectando pessoas a destinos com inovação e qualidade.</p>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="about-item-inner border p-4">
+                                <div class="about-icon mb-4">
+                                    <img src="{% static 'img/about-icon-2.png' %}" class="img-fluid w-50 h-50" alt="Icon">
+                                </div>
+                                <h5 class="mb-3">Nossa Missão</h5>
+                                <p class="mb-0">Facilitar o acesso à mobilidade com serviços descomplicados e tecnologia de ponta.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-item my-4">
+                        Fundada por apaixonados por estrada, a CarLoan nasceu com a missão de simplificar o aluguel de carros. Com 17 anos de experiência, nossa equipe trabalha incansavelmente para garantir que cada cliente tenha uma jornada tranquila e inesquecível.
+                    </p>
+                    <div class="row g-4">
+                        <div class="col-lg-6">
+                            <div class="text-center rounded bg-secondary p-4">
+                                <h1 class="display-6 text-white">17</h1>
+                                <h5 class="text-light mb-0">Anos de experiência</h5>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="rounded">
+                                <p class="mb-2"><i class="fa fa-check-circle text-primary me-1"></i> Atendimento personalizado</p>
+                                <p class="mb-2"><i class="fa fa-check-circle text-primary me-1"></i> Frota sempre atualizada</p>
+                                <p class="mb-2"><i class="fa fa-check-circle text-primary me-1"></i> Reservas simples e rápidas</p>
+                                <p class="mb-0"><i class="fa fa-check-circle text-primary me-1"></i> Compromisso com a segurança</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6 wow fadeInRight" data-wow-delay="0.2s">
+                <div class="about-img">
+                    <div class="img-1">
+                        <img src="{% static 'img/about-img.jpg' %}" class="img-fluid rounded h-100 w-100" alt="Imagem sobre a CarLoan">
+                    </div>
+                    <div class="img-2">
+                        <img src="{% static 'img/about-img-1.jpg' %}" class="img-fluid rounded w-100" alt="Imagem sobre a CarLoan">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+
+<!-- Car Steps Start -->
+<div class="container-fluid steps py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+            <h1 class="display-5 text-capitalize text-white mb-3">Como funciona o <span class="text-primary">CarLoan</span></h1>
+            <p class="mb-0 text-white">
+                Alugar um carro nunca foi tão fácil. Siga estes três passos simples e esteja pronto para pegar a estrada com segurança e praticidade.
+            </p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="steps-item p-4 mb-4">
+                    <h4>1. Escolha Seu Carro e Datas</h4>
+                    <p class="mb-0">
+                        Selecione o veículo ideal e defina as datas e horários de retirada e devolução.
+                    </p>
+                    <div class="setps-number">01.</div>
+                </div>
+            </div>
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="steps-item p-4 mb-4">
+                    <h4>2. Confirme Sua Reserva</h4>
+                    <p class="mb-0">
+                        Revise suas escolhas e clique em "Reservar Agora" para confirmar seu aluguel.
+                    </p>
+                    <div class="setps-number">02.</div>
+                </div>
+            </div>
+            <div class="col-lg-4 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="steps-item p-4 mb-4">
+                    <h4>3. Pegue o Carro e Aproveite</h4>
+                    <p class="mb-0">
+                        Retire o veículo no local e horário marcados e curta sua viagem com tranquilidade.
+                    </p>
+                    <div class="setps-number">03.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Car Steps End -->
+
+<!-- Services Start -->
+<div id="secao-servicos" class="container-fluid service py-5">
+    <div class="container py-5">
+        <div class="text-center mx-auto pb-5 wow fadeInUp" data-wow-delay="0.1s" style="max-width: 800px;">
+            <h1 class="display-5 text-capitalize mb-3">CarLoan <span class="text-primary">Serviços</span></h1>
+            <p class="mb-0">
+                Nossos serviços facilitam seu aluguel com rapidez e praticidade.
+            </p>
+        </div>
+        <div class="row g-4">
+            <!-- Reserva Online -->
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-globe fa-2x"></i>
+                    </div>
+                    <h5 class="mb-3">Reserva Online</h5>
+                    <p class="mb-0">Reserve seu carro de forma simples e rápida pela web.</p>
+                </div>
+            </div>
+            <!-- Suporte Ágil -->
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-phone fa-2x"></i>
+                    </div>
+                    <h5 class="mb-3">Suporte Ágil</h5>
+                    <p class="mb-0">Atendimento rápido para esclarecer dúvidas e auxiliar na reserva.</p>
+                </div>
+            </div>
+            <!-- Frota Selecionada -->
+            <div class="col-md-4 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item p-4">
+                    <div class="service-icon mb-4">
+                        <i class="fa fa-car fa-2x"></i>
+                    </div>
+                    <h5 class="mb-3">Frota Selecionada</h5>
+                    <p class="mb-0">Veículos revisados e prontos para atender suas necessidades.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Services End -->
+{% endblock content %}
