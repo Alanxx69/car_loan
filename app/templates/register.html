@@ -1,74 +1,111 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Registrar-se</title>
-</head>
-<body>
-  <h1>Registrar-se</h1>
+{% extends 'base.html' %}
+{% load static %}
 
-  {% if form.errors %}
-    <div class="errorlist">
-        <p>Por favor, corrija os erros abaixo:</p>
-        {{ form.non_field_errors }}
-        {% for field in form %}
-            {% if field.errors %}
-                <p><strong>{{ field.label }}:</strong> {{ field.errors|striptags }}</p>
-            {% endif %}
+{% block extra_head %}
+<link href="{% static 'css/register.css' %}" rel="stylesheet">
+{% endblock extra_head %}
+
+{% block title %}Registrar-se{% endblock title %}
+
+{% block content %}
+<div class="register-page container">
+  <div class="register-card">
+    <h3 class="register-title">Registrar-se</h3>
+
+    <form method="post" class="register-form" novalidate>
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="form-errors">
+          {% for err in form.non_field_errors %}{{ err }}{% endfor %}
+        </div>
+      {% endif %}
+
+      <!-- Usuário -->
+      <div class="form-group">
+        <label for="id_username">Usuário</label>
+        <input type="text" name="username" id="id_username" value="{{ form.username.value|default_if_none:'' }}">
+        {% for err in form.username.errors %}
+          <div class="field-error">{{ err }}</div>
         {% endfor %}
-    </div>
-  {% endif %}
+      </div>
 
-  <form method="post">
-    {% csrf_token %}
+      <!-- Senha -->
+      <div class="form-group">
+        <label for="id_password1">Senha</label>
+        <input type="password" name="password1" id="id_password1">
+        {% for err in form.password1.errors %}
+          <div class="field-error">{{ err }}</div>
+        {% endfor %}
+      </div>
 
-    <!-- Campos do User (UserCreationForm) -->
-    <label for="id_username">Usuário:</label><br>
-    <input type="text" name="username" id="id_username" required><br>
-    {% if form.username.errors %}<span style="color:red;">{{ form.username.errors|striptags }}</span><br>{% endif %}<br>
+      <!-- Confirmação de senha -->
+      <div class="form-group">
+        <label for="id_password2">Confirme a Senha</label>
+        <input type="password" name="password2" id="id_password2">
+        {% for err in form.password2.errors %}
+          <div class="field-error">{{ err }}</div>
+        {% endfor %}
+      </div>
 
-    <label for="id_password1">Senha:</label><br>
-    <input type="password" name="password1" id="id_password1" required><br>
-    {% if form.password.errors %}<span style="color:red;">{{ form.password.errors|striptags }}</span><br>{% endif %}<br>
+      <!-- Nome e Sobrenome -->
+      <div class="form-row">
+        <div class="form-group half-width">
+          <label for="id_first_name">Primeiro Nome</label>
+          <input type="text" name="first_name" id="id_first_name">
+        </div>
+        <div class="form-group half-width">
+          <label for="id_last_name">Sobrenome</label>
+          <input type="text" name="last_name" id="id_last_name">
+        </div>
+      </div>
 
-    <label for="id_password2">Confirme a Senha:</label><br>
-    <input type="password" name="password2" id="id_password2" required><br>
-    {% if form.password2.errors %}<span style="color:red;">{{ form.password2.errors|striptags }}</span><br>{% endif %}<br>
-    <!-- Fim dos campos do User -->
+      <!-- Email -->
+      <div class="form-group">
+        <label for="id_email">Email</label>
+        <input type="email" name="email" id="id_email">
+      </div>
 
-    <!-- Campos adicionais para o Customer -->
-    <label for="id_first_name">Primeiro Nome:</label><br>
-    <input type="text" id="id_first_name" name="first_name"><br><br>
+      <!-- Telefone -->
+      <div class="form-group">
+        <label for="id_phone">Telefone</label>
+        <input type="text" name="phone" id="id_phone">
+      </div>
 
-    <label for="id_last_name">Sobrenome:</label><br>
-    <input type="text" id="id_last_name" name="last_name"><br><br>
+      <!-- Data de Nascimento -->
+      <div class="form-group">
+        <label for="id_date_of_birth">Data de Nascimento</label>
+        <input type="date" name="date_of_birth" id="id_date_of_birth">
+      </div>
 
-    <label for="id_email">Email:</label><br>
-    <input type="email" id="id_email" name="email"><br><br>
+      <!-- Endereço -->
+      <div class="form-group">
+        <label for="id_address">Endereço</label>
+        <textarea name="address" id="id_address" rows="2"></textarea>
+      </div>
 
-    <label for="id_phone">Telefone:</label><br>
-    <input type="text" id="id_phone" name="phone"><br><br>
+      <!-- Cidade, Estado, CEP -->
+      <div class="form-row">
+        <div class="form-group third-width">
+          <label for="id_city">Cidade</label>
+          <input type="text" name="city" id="id_city">
+        </div>
+        <div class="form-group third-width">
+          <label for="id_state">Estado</label>
+          <input type="text" name="state" id="id_state">
+        </div>
+        <div class="form-group third-width">
+          <label for="id_zip_code">CEP</label>
+          <input type="text" name="zip_code" id="id_zip_code">
+        </div>
+      </div>
 
-    <label for="id_date_of_birth">Data de Nascimento:</label><br>
-    <input type="date" id="id_date_of_birth" name="date_of_birth"><br><br>
+      <button type="submit" class="btn-submit">Criar Conta</button>
+    </form>
 
-    <label for="id_address">Endereço:</label><br>
-    <textarea id="id_address" name="address"></textarea><br><br>
-
-    <label for="id_city">Cidade:</label><br>
-    <input type="text" id="id_city" name="city"><br><br>
-
-    <label for="id_state">Estado:</label><br>
-    <input type="text" id="id_state" name="state"><br><br>
-
-    <label for="id_zip_code">CEP:</label><br>
-    <input type="text" id="id_zip_code" name="zip_code"><br><br>
-    <!-- Fim dos campos adicionais -->
-
-    <button type="submit">Criar Conta</button>
-
-  </form>
-  <p>Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a>.</p>
-</body>
-</html>
+    <p class="login-link">
+      Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a>.
+    </p>
+  </div>
+</div>
+{% endblock content %}

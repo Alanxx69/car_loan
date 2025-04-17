@@ -6,29 +6,22 @@ from .forms import CustomerForm  # <<< ADICIONE ESTA LINHA
 from .models import Customer
 
 
-@login_required  # Garante que apenas usuários logados acessem
+@login_required
 def profile_update(request):
-    """Permite que o usuário logado atualize seu próprio perfil de cliente."""
-    # Busca o objeto Customer associado ao usuário logado (request.user)
-    # O campo no modelo Customer é 'user_id'
     customer = get_object_or_404(Customer, user_id=request.user)
 
     if request.method == "POST":
-        # Passa os dados do POST e a instância do cliente encontrado
-        form = CustomerForm(request.POST, instance=customer)
+        form = CustomerForm(request.POST, instance=customer)  # <<< USA CustomerForm
         if form.is_valid():
             form.save()
-            messages.success(request, "Seu perfil foi atualizado com sucesso!")  # Feedback
-            # Redireciona para a mesma página ou para uma página de perfil, se existir
+            messages.success(request, "Seu perfil foi atualizado com sucesso!")
             return redirect("profile_update")
         else:
-            messages.error(request, "Por favor, corrija os erros abaixo.")  # Feedback de erro
+            messages.error(request, "Por favor, corrija os erros abaixo.")
     else:
-        # Cria o formulário preenchido com os dados do cliente encontrado
-        form = CustomerForm(instance=customer)
+        form = CustomerForm(instance=customer)  # <<< USA CustomerForm
 
-    # Reutiliza o template de atualização, passando o formulário e o cliente
-    return render(request, "customer/customer_update.html", {"form": form, "customer": customer})
+    return render(request, "customer/customer_update.html", {"form": form})
 
 
 def customer_update(request, pk):

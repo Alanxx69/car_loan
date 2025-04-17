@@ -25,8 +25,6 @@ class CustomUserCreationForm(UserCreationForm):
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        # Liste os campos do modelo Customer que você quer permitir
-        # que o usuário edite no formulário.
         fields = [
             "first_name",
             "last_name",
@@ -38,16 +36,14 @@ class CustomerForm(forms.ModelForm):
             "state",
             "zip_code",
         ]
-        # Opcional: Adicionar widgets para customizar a aparência dos campos
         widgets = {
-            "date_of_birth": forms.DateInput(attrs={"type": "date"}),  # Usa input de data HTML5
-            "address": forms.Textarea(attrs={"rows": 3}),  # Textarea menor
+            "date_of_birth": forms.DateInput(format="%Y-%m-%d", attrs={"type": "date"}),
+            # ... outros widgets ...
         }
-        # Opcional: Definir labels em português se os nomes dos campos no modelo estiverem em inglês
-        labels = {
-            "first_name": "Primeiro Nome",
+        labels = {  # <<< ADICIONE ESTE DICIONÁRIO
+            "first_name": "Nome",
             "last_name": "Sobrenome",
-            "email": "Email",
+            "email": "E-mail",
             "phone": "Telefone",
             "date_of_birth": "Data de Nascimento",
             "address": "Endereço",
@@ -55,3 +51,12 @@ class CustomerForm(forms.ModelForm):
             "state": "Estado",
             "zip_code": "CEP",
         }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs.update({"class": "form-control"})
+            if field_name == "date_of_birth":
+                # Remove a classe form-control padrão se quiser usar apenas 'type=date'
+                # ou ajuste conforme necessário
+                pass
