@@ -21,10 +21,13 @@
                             <div class="col-lg-6 fadeInLeft animated" data-animation="fadeInLeft" data-delay="1s" style="animation-delay: 1s;">
                                 <div class="bg-secondary rounded p-5">
                                     <h4 class="text-white mb-4">Reserve um veículo</h4>
-                                    <form>
+                                    <form method="post" action="{% url 'create_reservation' %}">
+                                        {% csrf_token %}
                                         <div class="row g-3">
+
+                                            <!-- Tipo de carro -->
                                             <div class="col-12">
-                                                <select class="form-select" aria-label="Selecione o tipo de carro">
+                                                <select class="form-select" name="vehicle_id" aria-label="Selecione o tipo de carro">
                                                     <option selected>Selecione o tipo de carro</option>
                                                     {% for vehicle in available_vehicles %}
                                                         <option value="{{ vehicle.id }}">{{ vehicle.model }}</option>
@@ -33,106 +36,78 @@
                                                     {% endfor %}
                                                 </select>
                                             </div>
-                                            <div class="col-12">
+
+                                            <!-- Local de retirada -->
+                                                                                         <div class="col-12">
                                                 <div class="input-group">
                                                     <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
                                                         <span class="fas fa-map-marker-alt"></span>
                                                         <span class="ms-1">Retirada</span>
                                                     </div>
-                                                    <select class="form-select" aria-label="Selecione um local">
+                                                    <select class="form-select" name="pickup_location" aria-label="Selecione um local">
                                                         <option selected>Selecione um local</option>
                                                         {% for location in locations %}
-                                                            <option value="{{ location.id }}">{{ location }}</option>
+                                                            <option value="{{ location.id }}">
+                                                                {{ location }}
+                                                            </option>
                                                         {% empty %}
                                                             <option value="">Nenhuma localização disponível</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <!-- Local de devolução -->
                                             <div class="col-12">
                                                 <a href="#" class="text-start text-white d-block mb-2">Precisa de um local de devolução diferente?</a>
                                                 <div class="input-group">
                                                     <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
                                                         <span class="fas fa-map-marker-alt"></span><span class="ms-1">Devolução</span>
                                                     </div>
-                                                    <select class="form-select" aria-label="Selecione um local">
+                                                    <select class="form-select" name="dropoff_location" aria-label="Selecione um local">
                                                         <option selected>Selecione um local</option>
                                                         {% for location in locations %}
-                                                            <option value="{{ location.id }}">{{ location }}</option>
+                                                            <option value="{{ location.id }}">
+                                                                {{ location }}
+                                                            </option>
                                                         {% empty %}
                                                             <option value="">Nenhuma localização disponível</option>
                                                         {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <!-- Data e hora de retirada -->
                                             <div class="col-12">
                                                 <div class="input-group">
                                                     <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
                                                         <span class="fas fa-calendar-alt"></span><span class="ms-1">Data de Retirada</span>
                                                     </div>
-                                                    <input class="form-control" type="date">
-                                                    <select class="form-select ms-3" aria-label="Selecione o horário de retirada">
-                                                        <option selected>00:00</option>
-                                                        <option value="1">01:00</option>
-                                                        <option value="2">02:00</option>
-                                                        <option value="3">03:00</option>
-                                                        <option value="4">04:00</option>
-                                                        <option value="5">05:00</option>
-                                                        <option value="6">06:00</option>
-                                                        <option value="7">07:00</option>
-                                                        <option value="8">08:00</option>
-                                                        <option value="9">09:00</option>
-                                                        <option value="10">10:00</option>
-                                                        <option value="11">11:00</option>
-                                                        <option value="12">12:00</option>
-                                                        <option value="13">13:00</option>
-                                                        <option value="14">14:00</option>
-                                                        <option value="15">15:00</option>
-                                                        <option value="16">16:00</option>
-                                                        <option value="17">17:00</option>
-                                                        <option value="18">18:00</option>
-                                                        <option value="19">19:00</option>
-                                                        <option value="20">20:00</option>
-                                                        <option value="21">21:00</option>
-                                                        <option value="22">22:00</option>
-                                                        <option value="23">23:00</option>
+                                                    <input class="form-control" type="date" name="pickup_date">
+                                                    <select class="form-select ms-3" name="pickup_time" aria-label="Selecione o horário de retirada">
+                                                        {% for h in hours %}
+                                                            <option value="{{ h }}">{{ h }}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <!-- Data e hora de devolução -->
                                             <div class="col-12">
                                                 <div class="input-group">
                                                     <div class="d-flex align-items-center bg-light text-body rounded-start p-2">
                                                         <span class="fas fa-calendar-alt"></span><span class="ms-1">Data de Devolução</span>
                                                     </div>
-                                                    <input class="form-control" type="date">
-                                                    <select class="form-select ms-3" aria-label="Selecione o horário de devolução">
-                                                        <option selected>00:00</option>
-                                                        <option value="1">01:00</option>
-                                                        <option value="2">02:00</option>
-                                                        <option value="3">03:00</option>
-                                                        <option value="4">04:00</option>
-                                                        <option value="5">05:00</option>
-                                                        <option value="6">06:00</option>
-                                                        <option value="7">07:00</option>
-                                                        <option value="8">08:00</option>
-                                                        <option value="9">09:00</option>
-                                                        <option value="10">10:00</option>
-                                                        <option value="11">11:00</option>
-                                                        <option value="12">12:00</option>
-                                                        <option value="13">13:00</option>
-                                                        <option value="14">14:00</option>
-                                                        <option value="15">15:00</option>
-                                                        <option value="16">16:00</option>
-                                                        <option value="17">17:00</option>
-                                                        <option value="18">18:00</option>
-                                                        <option value="19">19:00</option>
-                                                        <option value="20">20:00</option>
-                                                        <option value="21">21:00</option>
-                                                        <option value="22">22:00</option>
-                                                        <option value="23">23:00</option>
+                                                    <input class="form-control" type="date" name="dropoff_date">
+                                                    <select class="form-select ms-3" name="dropoff_time" aria-label="Selecione o horário de devolução">
+                                                        {% for h in hours %}
+                                                            <option value="{{ h }}">{{ h }}</option>
+                                                        {% endfor %}
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <!-- Botão -->
                                             <div class="col-12">
                                                 <button class="btn btn-light w-100 py-2">Reservar Agora</button>
                                             </div>

@@ -1,5 +1,4 @@
 from django.contrib import messages  # Opcional: para feedback ao usuário
-from django.contrib.auth.forms import UserCreationForm
 from django.db import transaction  # Importe transaction
 from django.shortcuts import redirect, render
 
@@ -16,14 +15,14 @@ def home_view(request):
     locations = Location.objects.all()
 
     # Gera o range de horas (0-23) para os selects de horário
-    hours_range = range(24)
+    hours = [f"{h:02d}:00" for h in range(24)]  # Gera horários de 00:00 a 23:00
 
     # Veículos disponíveis para exibição
     available_vehicles = Vehicle.objects.filter(status="available")
 
     context = {
         "locations": locations,
-        "hours_range": hours_range,
+        "hours": hours,
         "available_vehicles": available_vehicles,
     }
 
