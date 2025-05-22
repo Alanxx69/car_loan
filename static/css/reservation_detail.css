@@ -1,0 +1,80 @@
+/* Estilos para a página de detalhes da reserva */
+
+.reservation-detail-page {
+    padding: 3rem 0;
+}
+
+.reservation-detail-title {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #1F2E4E; /* Cor secundária, como em customer_update */
+    font-size: 2rem;
+    font-weight: 600;
+}
+
+.reservation-info p,
+.reservation-info ul {
+    margin-bottom: 1rem;
+    color: #333;
+    font-size: 1rem; /* Tamanho de fonte padrão */
+    line-height: 1.6;
+}
+
+.reservation-info strong {
+    color: #1F2E4E; /* Cor secundária para destaque */
+    font-weight: 600;
+}
+
+.reservation-info ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.reservation-info ul li {
+    margin-bottom: 0.5rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.reservation-info ul li::before {
+    content: "•"; /* Marcador simples */
+    position: absolute;
+    left: 0;
+    color: #EA001E; /* Cor primária */
+    font-size: 1.2em;
+    line-height: 1;
+}
+
+.reservation-info hr {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-top: 1px solid #ddd;
+}
+
+.reservation-detail-actions {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.reservation-detail-actions .btn-secondary {
+    padding: 0.75rem 1.5rem;
+    background-color: #6c757d; /* Cor padrão do Bootstrap para secondary */
+    color: #fff;
+    border: none;
+    border-radius: 2rem; /* Estilo pill */
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.15s ease-in-out;
+}
+
+.reservation-detail-actions .btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+/* Alertas de mensagens (Bootstrap já deve cuidar, mas para garantir consistência) */
+.alert {
+    margin-bottom: 1.5rem;
+    border-radius: 0.5rem; /* Cantos arredondados para alertas */
+}

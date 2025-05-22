@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Minhas Reservas | CarLoan{% endblock title %}
+
+{% block extra_head %}
+    <link href="{% static 'css/my_reservations.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<div class="container py-5 my-reservations-page">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+            <div class="my-reservations-card wow fadeInUp" data-wow-delay="0.1s">
+                <h3 class="my-reservations-title">Minhas Reservas</h3>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                {% if reservations %}
+                    <div class="table-responsive">
+                        <table class="table table-hover my-reservations-table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#ID</th>
+                                    <th scope="col">Veículo</th>
+                                    <th scope="col">Retirada</th>
+                                    <th scope="col">Devolução</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Ações</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for reservation in reservations %}
+                                <tr>
+                                    <th scope="row">{{ reservation.id }}</th>
+                                    <td>{{ reservation.vehicle.model }} ({{ reservation.vehicle.license_plate }})</td>
+                                    <td>{{ reservation.pickup_datetime|date:"d/m/Y H:i" }}<br><small>{{ reservation.pickup_location }}</small></td>
+                                    <td>{{ reservation.dropoff_datetime|date:"d/m/Y H:i" }}<br><small>{{ reservation.dropoff_location }}</small></td>
+                                    <td><span class="badge bg-{{ reservation.vehicle.status|lower }}">{{ reservation.vehicle.get_status_display }}</span></td>
+                                    <td>
+                                        <a href="{% url 'reservation_detail' reservation_id=reservation.id %}" class="btn btn-sm btn-primary">Detalhes</a>
+                                        {# Futuramente, você pode adicionar botões para cancelar ou modificar a reserva, se aplicável #}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info text-center" role="alert">
+                        Você ainda não possui nenhuma reserva. <a href="{% url 'home' %}#secao-inicio" class="alert-link">Faça uma agora!</a>
+                    </div>
+                {% endif %}
+
+                <div class="my-reservations-actions mt-4 text-center">
+                    <a href="{% url 'home' %}#secao-inicio" class="btn btn-success">Fazer Nova Reserva</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

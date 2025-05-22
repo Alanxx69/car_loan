@@ -143,6 +143,33 @@ def reservation_detail(request, reservation_id):
     return render(request, "reservation/reservation_detail.html", context)
 
 
+@login_required
+def my_reservations(request):
+    user = request.user
+    customer_profile = None
+    reservations_list = []
+
+    # Tenta obter o perfil de cliente do usuário logado
+    try:
+        customer_profile = Customer.objects.get(user_id=user)
+    except Customer.DoesNotExist:
+        messages.error(
+            request, "Perfil de cliente não encontrado. Por favor, complete seu perfil para ver suas reservas."
+        )
+        return redirect("home")  # Ou para a página de criação/atualização de perfil
+
+    if customer_profile:
+        # Busca todas as reservas associadas a este perfil de cliente
+        # Ordena pelas mais recentes primeiro (data de criação ou data de retirada)
+        reservations_list = Reservation.objects.filter(customer=customer_profile).order_by("-created_at")
+
+    context = {
+        "reservations": reservations_list,
+    }
+
+    return render(request, "reservation/my_reservations.html", context)
+
+
 def search_vehicles(request):
     """
     View para buscar veículos via AJAX

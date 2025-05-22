@@ -5,9 +5,9 @@ from customer.models import Customer
 
 class Vehicle(models.Model):
     STATUS_CHOICES = [
-        ("available", "Available"),
-        ("loaned", "Loaned"),
-        ("maintenance", "Maintenance"),
+        ("available", "Disponível"),  # Traduzido
+        ("loaned", "Emprestado"),  # Traduzido
+        ("maintenance", "Em Manutenção"),  # Traduzido
     ]
 
     model = models.CharField(max_length=100)

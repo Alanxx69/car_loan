@@ -23,6 +23,7 @@
                                 {% csrf_token %}
                                 <button type="submit" class="dropdown-item">Sair</button>
                             </form>
+                            <a class="nav-link" href="{% url 'my_reservations' %}">Minhas Reservas</a>
                         </div>
                     </div>
                 {% else %}
