@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import now  # Melhor que datetime.now() para timezone-aware
 from django.utils.timezone import localtime, make_aware
+from pytz import timezone
 
 from customer.models import Customer  # Adicionar esta importação
 
@@ -81,8 +82,12 @@ def create_reservation(request):
 
             print(">> Datas combinadas:", pickup_datetime_str, dropoff_datetime_str)
 
-            pickup_datetime = make_aware(datetime.strptime(pickup_datetime_str, "%Y-%m-%d %H:%M"))
-            dropoff_datetime = make_aware(datetime.strptime(dropoff_datetime_str, "%Y-%m-%d %H:%M"))
+            pickup_datetime = datetime.strptime(pickup_datetime_str, "%Y-%m-%d %H:%M")
+            dropoff_datetime = datetime.strptime(dropoff_datetime_str, "%Y-%m-%d %H:%M")
+
+            brasil_tz = timezone("America/Sao_Paulo")
+            pickup_datetime = brasil_tz.localize(pickup_datetime)
+            dropoff_datetime = brasil_tz.localize(dropoff_datetime)
 
             if dropoff_datetime <= pickup_datetime:
                 messages.error(request, "A data/hora de devolução deve ser posterior à data/hora de retirada.")
