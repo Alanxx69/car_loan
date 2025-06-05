@@ -1,19 +1,21 @@
 import traceback  # Para capturar traceback completo
 from datetime import datetime
 
+import pytz  # Adicione esta importação para usar fusos horários
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.db import models
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
-from django.utils.timezone import now  # Melhor que datetime.now() para timezone-aware
-from django.utils.timezone import localtime, make_aware
-from pytz import timezone
+from django.utils import timezone
+from django.utils.timezone import localtime, now
+from django.views.decorators.http import require_GET
 
-from customer.models import Customer  # Adicionar esta importação
+from customer.models import Customer
 
-from .models import Location, Reservation, Vehicle
+from .forms import VehicleRatingForm
+from .models import Location, Reservation, Vehicle, VehicleRating
 
 # Create your views here.
 
@@ -85,7 +87,7 @@ def create_reservation(request):
             pickup_datetime = datetime.strptime(pickup_datetime_str, "%Y-%m-%d %H:%M")
             dropoff_datetime = datetime.strptime(dropoff_datetime_str, "%Y-%m-%d %H:%M")
 
-            brasil_tz = timezone("America/Sao_Paulo")
+            brasil_tz = pytz.timezone("America/Sao_Paulo")
             pickup_datetime = brasil_tz.localize(pickup_datetime)
             dropoff_datetime = brasil_tz.localize(dropoff_datetime)
 
@@ -112,7 +114,7 @@ def create_reservation(request):
 
             vehicle.status = "loaned"
             vehicle.save()
-            print(f">> Status do veículo atualizado para 'loaned'.")
+            print(">> Status do veículo atualizado para 'loaned'.")
 
             messages.success(request, f"Reserva do {vehicle.model} realizada com sucesso!")
             return redirect("reservation_detail", reservation_id=reservation.id)  # ALTERADO AQUI
@@ -170,6 +172,7 @@ def my_reservations(request):
 
     context = {
         "reservations": reservations_list,
+        "now_datetime": localtime(now()),  # Usar datetime completo para comparação
     }
 
     return render(request, "reservation/my_reservations.html", context)
@@ -200,3 +203,55 @@ def search_vehicles(request):
         ]
 
     return JsonResponse({"vehicles": vehicles})
+
+
+@login_required
+def rate_vehicle(request, reservation_id):
+    reservation = get_object_or_404(Reservation, pk=reservation_id)
+
+    # Verificar se o usuário é o cliente da reserva
+    if reservation.customer.user_id != request.user:
+        messages.error(request, "Você não tem permissão para avaliar esta reserva.")
+        return redirect("home")
+
+    # Verificar se a reserva já foi concluída (comparando datetime completo)
+    if reservation.dropoff_datetime > localtime(now()):
+        messages.error(request, "Você só pode avaliar após a data e hora de devolução.")
+        return redirect("my_reservations")
+
+    # Verificar se já existe uma avaliação
+    try:
+        rating = VehicleRating.objects.get(reservation=reservation)
+        messages.info(request, "Você já avaliou este veículo.")
+        return redirect("my_reservations")
+    except VehicleRating.DoesNotExist:
+        pass
+
+    if request.method == "POST":
+        form = VehicleRatingForm(request.POST)
+        if form.is_valid():
+            rating = form.save(commit=False)
+            rating.reservation = reservation
+            rating.save()
+            messages.success(request, "Obrigado pela sua avaliação!")
+            return redirect("my_reservations")
+    else:
+        form = VehicleRatingForm()
+
+    return render(request, "reservation/rate_vehicle.html", {"form": form, "reservation": reservation})
+
+
+@require_GET
+@login_required
+def api_update_reservation_status(request):
+    now = timezone.localtime(timezone.now())
+    vencidas = Reservation.objects.filter(status="active", dropoff_datetime__lte=now)
+    count = vencidas.count()
+    for res in vencidas:
+        res.status = "completed"
+        res.save()
+        # libera o veículo
+        v = res.vehicle
+        v.status = "available"
+        v.save()
+    return JsonResponse({"updated": count})

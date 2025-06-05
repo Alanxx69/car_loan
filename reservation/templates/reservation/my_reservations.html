@@ -43,10 +43,20 @@
                                     <td>{{ reservation.vehicle.model }} ({{ reservation.vehicle.license_plate }})</td>
                                     <td>{{ reservation.pickup_datetime|date:"d/m/Y H:i" }}<br><small>{{ reservation.pickup_location }}</small></td>
                                     <td>{{ reservation.dropoff_datetime|date:"d/m/Y H:i" }}<br><small>{{ reservation.dropoff_location }}</small></td>
-                                    <td><span class="badge bg-{{ reservation.vehicle.status|lower }}">{{ reservation.vehicle.get_status_display }}</span></td>
+                                    <td>
+                                      <span class="badge bg-{{ reservation.status|lower }}">
+                                        {{ reservation.get_status_display }}
+                                      </span>
+                                    </td>
                                     <td>
                                         <a href="{% url 'reservation_detail' reservation_id=reservation.id %}" class="btn btn-sm btn-primary">Detalhes</a>
                                         {# Futuramente, você pode adicionar botões para cancelar ou modificar a reserva, se aplicável #}
+
+                                        {% if reservation.dropoff_datetime < now_datetime and not reservation.rating %}
+                                        <a href="{% url 'rate_vehicle' reservation_id=reservation.id %}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-star"></i> Avaliar
+                                        </a>
+                                        {% endif %}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -66,4 +76,19 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  async function pollStatus() {
+    // executa no banco
+    await fetch("{% url 'api_update_reservation_status' %}");
+    // depois atualiza o front
+    refreshReservations();
+  }
+  document.addEventListener('DOMContentLoaded', () => {
+    pollStatus();
+    setInterval(pollStatus, 60000);  // a cada 1 min
+  });
+</script>
 {% endblock %}

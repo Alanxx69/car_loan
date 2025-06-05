@@ -36,15 +36,14 @@
     padding: 0.4em 0.7em;
 }
 
-.my-reservations-table .badge.bg-available {
-    background-color: #28a745 !important; /* Verde para disponível */
+.my-reservations-table .badge.bg-active {
+    background-color: #2bf65a; /* azul */
 }
-.my-reservations-table .badge.bg-loaned {
-    background-color: #ffc107 !important; /* Amarelo para emprestado */
-    color: #212529 !important;
+.my-reservations-table .badge.bg-completed {
+    background-color: #28a745; /* verde */
 }
-.my-reservations-table .badge.bg-maintenance {
-    background-color: #dc3545 !important; /* Vermelho para manutenção */
+.my-reservations-table .badge.bg-canceled {
+    background-color: #dc3545; /* vermelho */
 }
 
 

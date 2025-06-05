@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Avaliar Veículo | CarLoan{% endblock %}
+
+{% block extra_head %}
+<style>
+    .rating-form {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 1rem;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+    }
+
+    .rating-title {
+        color: #1F2E4E;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .rating-options {
+        display: flex;
+        justify-content: center;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .rating-options label {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        cursor: pointer;
+        margin: 0;
+    }
+
+    .rating-options input {
+        margin-bottom: 0.5rem;
+    }
+
+    .rating-options i {
+        color: #ffc107;
+        font-size: 1.5rem;
+    }
+
+    .btn-submit-rating {
+        background-color: #EA001E;
+        color: white;
+        border: none;
+        border-radius: 2rem;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        transition: background-color 0.15s;
+    }
+
+    .btn-submit-rating:hover {
+        background-color: #1F2E4E;
+    }
+   .comment-box {
+       border-radius: .75rem;
+       padding: 1rem;
+       background: #ffffff;
+       border: 1px solid #ced4da;
+       box-shadow: inset 0 2px 4px rgba(0,0,0,0.08);
+       resize: vertical;
+       min-height: 150px;
+   }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="rating-form">
+                <h2 class="rating-title">Avalie sua experiência com o {{ reservation.vehicle.model }}</h2>
+
+                <div class="mb-4 text-center">
+                    <p><strong>Período da Reserva:</strong> {{ reservation.pickup_datetime|date:"d/m/Y H:i" }} &rarr; {{ reservation.dropoff_datetime|date:"d/m/Y H:i" }}</p>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="form-group mb-4">
+                        <label class="form-label">Sua avaliação:</label>
+                        <div class="rating-options">
+                            {% for choice in form.rating %}
+                            <label>
+                                {{ choice.tag }}
+                                {% with value=forloop.counter %}
+                                    {% for i in "12345" %}
+                                        {% if forloop.counter <= value %}
+                                        <i class="fas fa-star"></i>
+                                        {% else %}
+                                        <i class="far fa-star"></i>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <span>{{ value }} {% if value == 1 %}Estrela{% else %}Estrelas{% endif %}</span>
+                                {% endwith %}
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="form-floating mb-4">
+                        {{ form.comment }}
+                        <label for="{{ form.comment.id_for_label }}">Comentário (opcional)</label>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn-submit-rating">Enviar Avaliação</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
